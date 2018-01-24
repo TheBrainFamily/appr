@@ -5,13 +5,14 @@ const log = require('./log');
 module.exports = function postDeploy() {
   const expUrl = `https://expo.io/@${config.expUsername}/${utils.readPackageJSON().name}`;
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${expUrl}`;
-  const issueUrl = `https://${config.githubUsername}:${config.githubToken}@api.github.com/repos/${config.githubOrg}/${config.githubRepo}/issues/${config.githubPullRequestId}/comments`;
+  if (config.githubPullRequestId) {
+    const issueUrl = `https://${config.githubUsername}:${config.githubToken}@api.github.com/repos/${config.githubOrg}/${config.githubRepo}/issues/${config.githubPullRequestId}/comments`;
 
-  log('Exponent URL', expUrl);
-  log('GitHub Issue URL', issueUrl);
-  log('QR Code URL ', qrUrl);
+    log('Exponent URL', expUrl);
+    log('GitHub Issue URL', issueUrl);
+    log('QR Code URL ', qrUrl);
 
-  const body = `
+    const body = `
   :shipit: This branch has been deployed to:
   ${expUrl}
 
@@ -20,20 +21,23 @@ module.exports = function postDeploy() {
   ![QR Code](${qrUrl})
   `;
 
-  request.post(
-    {
-      url: issueUrl,
-      headers: { 'User-Agent': 'ci' },
-      body: JSON.stringify({ body })
-    },
-    (error, response) => {
-      if (error) {
-        console.error('Failed to post comment to GitHub, an error occurred', error);
-      } else if (response.statusCode >= 400) {
-        console.error('Failed to post comment to GitHub, request failed with', response);
-      } else {
-        console.log(`Posted message to GitHub PR #${config.githubPullRequestId}`);
+    request.post(
+      {
+        url: issueUrl,
+        headers: {'User-Agent': 'ci'},
+        body: JSON.stringify({body})
+      },
+      (error, response) => {
+        if (error) {
+          console.error('Failed to post comment to GitHub, an error occurred', error);
+        } else if (response.statusCode >= 400) {
+          console.error('Failed to post comment to GitHub, request failed with', response);
+        } else {
+          console.log(`Posted message to GitHub PR #${config.githubPullRequestId}`);
+        }
       }
-    }
-  );
+    );
+  } else {
+    console.log(`This is not Pull Request, but in case you need to take a look manually already, use this: \n${expUrl}`)
+  }
 };
