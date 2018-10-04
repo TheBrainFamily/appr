@@ -15,7 +15,7 @@
     "url": "git+https://github.com/TheBrainFamily/appr.git"
   },
   "bin": {
-    "appr": "./index.js"
+    "thebrainFriendlyBot": "./index.js"
   },
   "author": "Lukasz Gandecki",
   "license": "MIT",
