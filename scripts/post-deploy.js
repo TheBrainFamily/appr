@@ -2,13 +2,20 @@ const request = require('request');
 const config = require('./config');
 const log = require('./log');
 module.exports = function postDeploy() {
+
+  const webUrl = config.webEndpoint
+  const graphqlUrl = config.graphqlEndpoint
+
   const issueUrl = `https://${config.githubUsername}:${config.githubToken}@api.github.com/repos/${config.githubOrg}/${config.githubRepo}/issues/${config.githubPullRequestId}/comments`;
 
   log('GitHub Issue URL', issueUrl);
 
   const body = `
-  :shipit: This branch has been deployed to:
+  :shipit: This branch has been deployed.
 
+  Web is available here: [${webUrl}](${webUrl})
+  
+  And if you must, you can connect to the graphql server here: [${graphqlUrl}](${graphqlUrl})
   `;
 
   request.post(
