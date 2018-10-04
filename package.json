@@ -1,7 +1,7 @@
 {
-  "name": "appr",
-  "version": "1.1.0",
-  "description": "Pull Request Review Apps for create-react-native-app / Expo",
+  "name": "thebrain-friendly-bot",
+  "version": "1.0.0",
+  "description": "Pull Request Review",
   "main": "index.js",
   "scripts": {
     "test": "eslint scripts/"
@@ -12,17 +12,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FormidableLabs/appr.git"
+    "url": "git+https://github.com/TheBrainFamily/appr.git"
   },
   "bin": {
     "appr": "./index.js"
   },
-  "author": "Jani Eväkallio <jani.evakallio@formidable.com>",
+  "author": "Lukasz Gandecki",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FormidableLabs/appr/issues"
+    "url": "https://github.com/TheBrainFamily/appr/issues"
   },
-  "homepage": "https://github.com/FormidableLabs/appr#readme",
+  "homepage": "https://github.com/TheBrainFamily/appr#readme",
   "devDependencies": {
     "babel-eslint": "^7.1.1",
     "eslint": "^3.17.1",
@@ -32,7 +32,6 @@
     "eslint-plugin-import": "^2.2.0"
   },
   "dependencies": {
-    "exp": "^44.0.0",
     "request": "^2.81.0"
   }
 }

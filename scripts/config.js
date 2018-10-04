@@ -1,11 +1,4 @@
-let config;
-if (process.env.TRAVIS === 'true') {
-  config = require('./config/travis');
-} else if (process.env.CIRCLECI === 'true') {
-  config = require('./config/circle');
-} else {
-  config = require('./config/default');
-}
+let config = require('./config/circle');
 
 for (const key in config) {
   const value = config[key];
