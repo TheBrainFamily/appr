@@ -6,5 +6,7 @@ module.exports = {
   githubOrg: process.env.CIRCLE_PROJECT_USERNAME,
   githubRepo: process.env.CIRCLE_PROJECT_REPONAME,
   githubSourceBranch: process.env.CIRCLE_BRANCH,
-  githubPullRequestId: (process.env.CI_PULL_REQUEST || '').split('/').slice(-1)[0]
+  githubPullRequestId: (process.env.CI_PULL_REQUEST || '').split('/').slice(-1)[0],
+  webEndpoint: process.env.WEB_ENDPOINT,
+  graphqlEndpoint: process.env.GRAPHQL_SERVER_URI
 };
