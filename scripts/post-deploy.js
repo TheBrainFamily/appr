@@ -3,6 +3,8 @@ const utils = require('./utils');
 const config = require('./config');
 const log = require('./log');
 module.exports = function postDeploy() {
+  const webUrl = config.webEndpoint
+  const graphqlUrl = config.graphqlEndpoint
   const expUrl = `https://expo.io/@${config.expUsername}/${utils.readPackageJSON().name}`;
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${expUrl}`;
   if (config.githubPullRequestId) {
@@ -13,12 +15,18 @@ module.exports = function postDeploy() {
     log('QR Code URL ', qrUrl);
 
     const body = `
-  :shipit: This branch has been deployed to:
+  :shipit: Mobile app from this branch has been deployed to:
   ${expUrl}
 
   Download the [Expo](https://expo.io/) app and scan this QR code to get started!
 
   ![QR Code](${qrUrl})
+  
+  If you are on iOS you will have to go here: https://expo.io/@${config.expUsername}/${utils.readPackageJSON().name} manually.
+  
+  Web is available here: [${webUrl}](${webUrl})
+  
+  And if you must, you can connect to the graphql server here: [${graphqlUrl}](${graphqlUrl})
   `;
 
     request.post(
@@ -38,6 +46,6 @@ module.exports = function postDeploy() {
       }
     );
   } else {
-    console.log(`This is not Pull Request, but in case you need to take a look manually already, use this: \n${expUrl}`)
+    console.log(`This is not Pull Request, but in case you need to take a look manually already, mobile: \n${expUrl} web: ${webUrl}, server: ${graphqlUrl}`)
   }
 };
